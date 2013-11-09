@@ -2,15 +2,16 @@ import java.util.Arrays;
 
 PGraphics big;
 boolean drawLight;
+boolean blackAndWhite = true;
 int counter;
 
-float koru_probs[] = {.9, .1, .1 };
+float koru_probs[] = {.95, .1, 0 };
 float prob_trip = .1; // Chance of each koru being a triple
 
 void setup() {
 
   // Draw extra large and then scale down for viewing on screen
-  big = createGraphics(3200, 4800, JAVA2D);
+  big = createGraphics(3115, 4300, JAVA2D);
   big.beginDraw();
   big.noStroke();
 
@@ -27,14 +28,24 @@ void keyPressed() {
   if (key == 's') {
     big.save("walters.tif");
   }
+  if (key == 'b') {
+    blackAndWhite = ! blackAndWhite;
+    redraw();
+  }
 }
 
 void draw() {
 
-  color light = color(50,100 + random(155), 100 + random(155));
-  color dark = color(0,0,0);
+  color light;
+  if (blackAndWhite) {
+    light = color(255, 255, 255);
+  }
+  else {
+    light = color(50,100 + random(155), 100 + random(155));
+  }
+  color dark = color(0, 0, 0);
 
-  int row_height = 150;
+  int row_height = 100;
   drawLight = false;
   Row prev_row = new Row();
 
